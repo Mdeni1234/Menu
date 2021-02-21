@@ -1,0 +1,42 @@
+<div id="menu">
+        <nav class="menu" data-target="menu" *ngIf="alert.visible">
+                <!-- <mat-tab-group color="primary" mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+                    <mat-tab>
+                      <ng-template mat-tab-label>
+                        <mat-icon routerLink="/menu">store_mall_directory</mat-icon>
+                      </ng-template>
+                    </mat-tab>
+                    <mat-tab>
+                      <ng-template mat-tab-label>
+                        <mat-icon matBadge="{{hitungPesan}}" matBadgeOverlap="false" routerLink="/penjualan" (click)="changeStatus()">near_me</mat-icon>
+                      </ng-template>
+                    </mat-tab>
+                    <mat-tab *ngIf="authService.canEdit(user)">
+                      <ng-template mat-tab-label>
+                        <mat-icon routerLink="/setelan">menu_open</mat-icon>
+                      </ng-template>
+                    </mat-tab>
+                    <mat-tab>
+                    <ng-template mat-tab-label>
+                        <mat-icon (click) = "logout()" class="logout">power_settings_new</mat-icon>
+                    </ng-template>
+                    </mat-tab>
+                  </mat-tab-group> -->
+                  <nav mat-tab-nav-bar color="primary" mat-stretch-tabs class="example-stretched-tabs mat-elevation-z4">
+                    <a mat-tab-link
+                    *ngFor="let link of navLinks"
+                    [routerLink]="link.link? link.link : null"
+                    routerLinkActive #rla="routerLinkActive"
+                    [active]="rla.isActive"
+                    (click) = "link.status? changeStatus() : null"
+                    >
+                    <mat-icon matBadge="{{link.badge}}" matBadgeOverlap="false" >{{link.icon}}</mat-icon>
+                  </a>
+                  <a mat-tab-link
+                    (click) = "logout()"
+                    >
+                    <mat-icon >power_settings_new</mat-icon>
+                  </a>
+                  </nav>
+            </nav>
+</div>

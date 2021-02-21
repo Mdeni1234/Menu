@@ -1,0 +1,45 @@
+form {
+  height: 90%;
+    mat-card {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    
+    mat-card {
+      text-align: center;
+      margin: 30px auto;
+        .tambah {
+          width: 60%;
+    }
+  }
+  .submit {
+    width: 100%;
+    border-radius: 0;
+    position: fixed;
+    bottom: 0%;
+    right: 0;
+    left: 0; 
+    text-align: center;
+  }
+}
+.example-full-width {
+  width: 100%;
+}
+}
+@media only screen and (min-width: 768px){
+  form {
+        mat-card {
+        width: 60%;
+        text-align: center;
+        margin: 0 auto;
+        
+        mat-card {
+          text-align: center;
+          margin: 30px auto;
+            .tambah {
+              width: 60%;
+        }
+      }
+    }
+  }
+}

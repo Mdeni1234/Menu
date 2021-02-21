@@ -1,0 +1,37 @@
+  <div class="start">
+    <button mat-raised-button (click)="onTambah()"> Tambah Menu</button>
+    <table mat-table [dataSource]="menu" class="mat-elecation-z8">
+
+
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let i =index"> {{i+1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="nama">
+        <th mat-header-cell *matHeaderCellDef> Nama Menu </th>
+        <td mat-cell *matCellDef="let menu" (click)="onEdit(menu)"> {{menu.namaMenu}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="harga">
+        <th mat-header-cell *matHeaderCellDef> Harga Menu </th>
+        <td mat-cell *matCellDef="let menu"(click)="onEdit(menu)"> {{menu.hargaMenu}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="stok">
+        <th mat-header-cell *matHeaderCellDef> Stok </th>
+        <td mat-cell *matCellDef="let menu" (click)="onEdit(menu)"> {{ menu.stok }}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="aksi">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let menu; let i = index" (click)="onDel(menu, i)"><mat-icon color="danger" aria-hidden="false" aria-label="Example thumbs up SVG icon">delete_sweep</mat-icon></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

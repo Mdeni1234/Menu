@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "firebase use default": "menu-31b53",
+    "default": "menu-31b53"
+  },
+  "targets": {
+    "menu-31b53": {
+      "hosting": {
+        "Dmenu": [
+          "menu-31b53"
+        ]
+      }
+    }
+  }
+}

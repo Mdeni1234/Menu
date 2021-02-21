@@ -1,0 +1,34 @@
+<div class="menuOverlay">
+    <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>Setelan</mat-card-title>
+          <mat-card-subtitle>Setting Form untuk menu</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+                <form class="example-form" [formGroup]="form" >
+                  <input type="hidden" formControlName="id"  >
+                        <mat-form-field class="example-full-width">
+                            <input  matInput placeholder="Nama Gerai" formControlName="namaGerai" name="namaGerai" #namaGerai>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width">
+                            <input  [ngxTimepicker]="min" min="04:00 pm"  matInput placeholder="Jam Buka" formControlName="jamBuka" name="jamBuka" #jamBuka readonly>
+                            <ngx-material-timepicker #min ></ngx-material-timepicker>
+                        </mat-form-field> 
+                        <mat-form-field class="example-full-width">
+                          <input [ngxTimepicker]="max" max="01:00 am" matInput placeholder="Jam Tutup" formControlName="jamTutup" name="jamBuka" #jamTutup readonly>
+                          <ngx-material-timepicker #max></ngx-material-timepicker>
+                        </mat-form-field>
+                          <mat-form-field class="example-full-width">
+                            <mat-label>Choose an option</mat-label>
+                            <mat-select formControlName="users" name="users" #users>
+                              <mat-option  *ngFor="let user of a; let i = index" value="{{user.email}}">
+                                {{a}}
+                              </mat-option>
+                            </mat-select>
+                      </mat-form-field>
+                        <button mat-flat-button color="primary" (click)="tambahGerai(form.value)" [disabled]="form.pristine || form.invalid">Save</button>
+                      </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+   

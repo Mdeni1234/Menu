@@ -1,0 +1,41 @@
+
+<mat-card *ngFor=" let pesanan of pesanan">
+    <ng-container *ngIf="pesanan.tag == 1">
+            <mat-card-header>
+                    <mat-card-title>Penjualan</mat-card-title>
+                    <mat-card-subtitle> {{pesanan.waktu.toDate() | date:'M/d/yy, h:mm a' | timeAgo }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p *ngFor="let pesan of pesanan.pesanan;">
+                        {{pesan.namaPesanan}} ({{pesan.jumlahPesanan}})
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <mat-card-subtitle class="pesanan"> Jumlah </mat-card-subtitle>
+                    <p> Rp. {{ pesanan.jumlah }}</p>
+                </mat-card-actions>
+    </ng-container>
+    <ng-container *ngIf="pesanan.tag == 2">
+                    <mat-card-header>
+                        <mat-card-title>Hasil Penjualan</mat-card-title>
+                        <mat-card-subtitle> {{pesanan.waktu.toDate() | date:'M/d/yy, h:mm a'  | timeAgo }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p *ngFor="let jual of pesanan.penjualan;">
+                            {{jual.namaPesanan}} ({{jual.terjual}})
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions class="jual">
+                        <div class="col-4">
+                                <mat-card-subtitle > Jumlah Transaksi </mat-card-subtitle>
+                                <p> Quantity : {{ pesanan.jumlahPenjualan }}</p>
+                        </div>
+                        <div class="col-6">
+                                <mat-card-subtitle> Hasil Penjualan </mat-card-subtitle>
+                                <p> Rp.{{ pesanan.hasilPenjualan }}</p>
+                        </div>
+                        
+                    </mat-card-actions>
+                </ng-container>
+            </mat-card>
+    

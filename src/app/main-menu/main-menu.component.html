@@ -1,0 +1,29 @@
+<form [formGroup]="form" >
+    <mat-card>
+            <mat-card-title>Pesanan</mat-card-title>
+    <div formArrayName="pesanan">
+      <div *ngFor="let daftar of menu; let i=index; let pesanan of form.get('pesanan')['controls'];">
+        <section *ngIf="daftar.stok > 0">
+                <mat-card>
+                        <mat-card-header>
+                                <mat-card-title>{{ daftar.id }}</mat-card-title>
+                                <mat-card-subtitle>{{ daftar.hargaMenu}}</mat-card-subtitle>
+                        </mat-card-header>
+                                <mat-card-content>
+                                        <div [formGroupName]="i">                       
+                                                <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Jumlah Pesanan" name="jumlahPesanan" formControlName="jumlahPesanan"  #jumlahPesanan>
+                                                </mat-form-field>
+                                                <button mat-flat-button color="primary" (click)="tambah(i,jumlahPesanan.value)" class="tambah">Tambah</button>
+                                        </div>                                
+                                </mat-card-content>
+                </mat-card>
+        </section>
+            </div>
+        </div>
+        <mat-card-actions>
+                <button mat-flat-button color="primary" type="submit" (click)="onSubmit(form.value)" class="submit" [disabled]="form.invalid">Tambahkan Pesanan</button>
+        </mat-card-actions>
+    </mat-card>
+    </form>
+

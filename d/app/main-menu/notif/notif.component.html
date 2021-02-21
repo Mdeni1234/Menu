@@ -1,0 +1,27 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Detail Pesanan</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-card-subtitle>Pesanan</mat-card-subtitle>
+            <form [formGroup] = "form">
+                <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport">
+                        <div formArrayName="hasilPesanan" >
+                                <div *cdkVirtualFor="let menu of form.get('hasilPesanan')['controls']; let i = index">
+                                <div [formGroupName] = "i">
+                                    <mat-form-field class="example-full-width">
+                                      <input matInput formControlName="pesanan">
+                                    </mat-form-field>
+                                    </div>
+                                    </div>
+                                </div>
+                </cdk-virtual-scroll-viewport>
+            </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <mat-card-header>
+            <mat-card-subtitle>Jumlah</mat-card-subtitle>
+        </mat-card-header>
+        <p>Rp. {{data.hasil}}</p>
+    </mat-card-actions>
+</mat-card>

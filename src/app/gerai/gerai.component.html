@@ -1,0 +1,45 @@
+<div class="start">
+    <button mat-raised-button (click)="tambahGerai()"> Tambah Menu</button>
+    <table mat-table [dataSource]="gerai" class="mat-elecation-z8">
+
+
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <td mat-cell *matCellDef="let i = index"> {{i+1}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="gerai">
+        <th mat-header-cell *matHeaderCellDef> Nama Gerai </th>
+        <td mat-cell *matCellDef="let gerai" (click)="onEdit(gerai)"> {{gerai.namaGerai}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="jamBuka">
+        <th mat-header-cell *matHeaderCellDef> Jam Buka </th>
+        <td mat-cell *matCellDef="let gerai"(click)="onEdit(gerai)"> {{gerai.jamBuka}} </td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="jamTutup">
+        <th mat-header-cell *matHeaderCellDef> Jam Tutup </th>
+        <td mat-cell *matCellDef="let gerai" (click)="onEdit(gerai)"> {{ gerai.jamTutup }}</td>
+      </ng-container>
+
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="user">
+        <th mat-header-cell *matHeaderCellDef> User </th>
+        <td mat-cell *matCellDef="let gerai" (click)="onEdit(gerai)"> {{ gerai.user }}</td>
+      </ng-container>
+      <ng-container matColumnDef="menu">
+        <th mat-header-cell *matHeaderCellDef> Menu </th>
+        <td mat-cell *matCellDef="let gerai" (click)="onEdit(gerai)"> {{ gerai.stok }}</td>
+      </ng-container>
+      <ng-container matColumnDef="aksi">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let gerai; let i = index" (click)="onDel(gerai, i)"><mat-icon color="danger" aria-hidden="false" aria-label="Example thumbs up SVG icon">delete_sweep</mat-icon></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

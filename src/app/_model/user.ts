@@ -5,5 +5,6 @@ export interface Roles {
 export class User {
     uid: string;
     email: string;
+    gerai: boolean;
     roles: Roles;
 }

@@ -9,13 +9,14 @@ import { AuthGuard } from './_guard/auth.guard';
 import { DeActiveGuard } from './_guard/de-active.guard';
 import { GeraiComponent } from './gerai/gerai.component';
 import { AdminGuard } from './_guard/admin.guard';
+import { CanReadGuard } from './_guard/can-read.guard';
 
 const routes: Routes = [
   { path: 'login', component: SignInComponent, canDeactivate: [DeActiveGuard] },
-  { path: 'menu', component: MainMenuComponent, canActivate: [AuthGuard]},
-  { path: 'setelan', component: SetelanComponent, canActivate: [AdminGuard]},
+  { path: 'menu', component: MainMenuComponent, canActivate: [CanReadGuard]},
+  { path: 'setelmenu', component: SetelanComponent, canActivate: [AdminGuard]},
   { path: 'penjualan', component: ListPesananComponent, canActivate: [AuthGuard]},
-  { path: 'gerai', component: GeraiComponent, canActivate: [AuthGuard]},
+  { path: 'gerai', component: GeraiComponent, canActivate: [AdminGuard]},
   { path: '**', redirectTo: 'menu'}
 ];
 

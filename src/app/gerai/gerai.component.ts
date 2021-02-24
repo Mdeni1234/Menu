@@ -7,6 +7,7 @@ import { MenuService } from '../_service/menu.service';
 import { Gerai } from '../_model/gerai.model';
 import { GeraiService } from '../_service/gerai.service';
 import { User } from '../_model/user';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,9 +19,10 @@ export class GeraiComponent implements OnInit {
 
   user : User[];
   gerai : Gerai[];
-  displayedColumns: string[] = ['no', 'gerai', 'jamBuka', 'jamTutup', 'user', 'menu', 'aksi'];
+  displayedColumns: string[] = ['no', 'gerai', 'buka', 'tutup', 'user', 'menu', 'aksi'];
   constructor(
     private serviceGerai: GeraiService,
+    private router : Router,
     public dialog: MatDialog
   ) { }
   ngOnInit() {
@@ -37,12 +39,12 @@ export class GeraiComponent implements OnInit {
   }
   getGerai() {
     this.serviceGerai.ambilGerai().subscribe( data => {
-this.gerai = data.map( value => {
-  return {
-    id: value.payload.doc.id,
-    ...(value.payload.doc.data() as Gerai)
-  }
-})
+    this.gerai = data.map( value => {
+      return {
+        id: value.payload.doc.id,
+        ...(value.payload.doc.data() as Gerai)
+      }
+    })
     })
   }
   getusers() {
@@ -56,7 +58,7 @@ this.gerai = data.map( value => {
     })
   }
   onDel(id, i) {
-    // this.serviceMenu.deleteMenu(id.id);
+    this.serviceGerai.deleteGerai(id.id);
   }
   tambahGerai(): void{
     let users = this.user;
@@ -74,15 +76,16 @@ this.gerai = data.map( value => {
       }, 3);
     });
   }
- onEdit(gerai: Gerai) {
+ sendData(gerai: Gerai) {
    console.log(gerai);
-  const dialogRef = this.dialog.open(BuatGeraiComponent, {
-    maxWidth: '90%',
-    maxHeight: '90%',
-    data: gerai
-  });
-  dialogRef.afterClosed().subscribe(res => this.ngOnInit()
-  );
+   this.router.navigateByUrl('/setelmenu', {state: {id: gerai.id}});
+  // const dialogRef = this.dialog.open(BuatGeraiComponent, {
+  //   maxWidth: '90%',
+  //   maxHeight: '90%',
+  //   data: gerai
+  // });
+  // dialogRef.afterClosed().subscribe(res => this.ngOnInit()
+  // );
  }  
 }
 

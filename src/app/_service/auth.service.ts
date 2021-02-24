@@ -57,6 +57,7 @@ export class AuthService {
     const data: User = {
       uid: user.uid,
       email: user.email,
+      gerai: false,
       roles: {
         user: true
       }

@@ -34,8 +34,8 @@ export class GeraiService {
   updateGerai(gerai: any) {
     this.firestore.doc('gerai/' + gerai.id).update(gerai);
   }
-  hapusGerai(geraiId: string) {
-    this.firestore.doc('gerai' + geraiId).delete()
+  deleteGerai(geraiId: string) {
+    this.firestore.collection('gerai').doc(geraiId).delete()
   }
   ambilUsers() {
       return this.firestore.collection('users').snapshotChanges();

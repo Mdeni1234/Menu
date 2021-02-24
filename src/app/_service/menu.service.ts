@@ -81,5 +81,8 @@ export class MenuService {
   getMenu() {
     return this.firestore.collection('gerai').doc(this.gerai.id).collection('menu').snapshotChanges();
   }
+  getMenuAdmin(id:string) {
+    return this.firestore.collection('gerai').doc(id).collection('menu').snapshotChanges();
+  }
   
 }

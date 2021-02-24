@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material';
-import { AlertService } from 'd/app/_service/alert.service';
+import { AlertService } from '../_service/alert.service';
 import { AuthService } from './auth.service';
 import { GeraiService } from './gerai.service';
 import * as firebase from 'firebase/app';
 import { Observable } from 'rxjs';
-import { Pesanan } from 'd/app/_model/pesanan.model';
+import { Pesanan } from '../_model/pesanan.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({

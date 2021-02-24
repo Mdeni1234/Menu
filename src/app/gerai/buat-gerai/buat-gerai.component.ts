@@ -29,8 +29,8 @@ export class BuatGeraiComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { 
     const dataUser = new Observable((observer) => {
-      this.UserService.getUser().subscribe( usr =>{
-        const user = usr.map(item => {
+      this.UserService.getUser().subscribe( usr => {
+        const user : User[] = usr.map(item => {
           return {
             id: item.payload.doc.id,
             ...item.payload.doc.data() as User
@@ -39,8 +39,13 @@ export class BuatGeraiComponent implements OnInit {
         observer.next(user);
       });
     });
-    dataUser.subscribe((s)=> {
-      console.log(s);
+    dataUser.subscribe((user: User[])=> {
+      user.forEach(item => {
+        if(!item.gerai) {
+          this.user = [item.email]
+        }
+        console.log(this.user)
+      });
     })
   }
   ngOnInit() {

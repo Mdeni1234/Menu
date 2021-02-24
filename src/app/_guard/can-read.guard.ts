@@ -4,7 +4,9 @@ import { AuthService } from '../_service/auth.service';
 import { Observable } from 'rxjs';
 import { take, map, tap } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CanReadGuard implements CanActivate {
 
   constructor(private auth: AuthService) {}
@@ -18,7 +20,7 @@ export class CanReadGuard implements CanActivate {
       map(user => user && this.auth.isUser(user) ? true : false), 
       tap(canView => {
         if (!canView) {
-          console.error('Access denied. Must have permission to view content')
+          console.error('Access denied. Must have permission to view content');
         }
       })
     );

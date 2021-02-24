@@ -4,6 +4,9 @@ import { MenuService } from '../_service/menu.service';
 import { MatMenuTrigger, MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Menu } from '../_model/menu.model';
 import { MenuComponent } from './menu/menu.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import {Location} from '@angular/common';
+import { AlertService } from '../_service/alert.service';
 
 @Component({
   selector: 'app-setelan',
@@ -15,10 +18,15 @@ export class SetelanComponent implements OnInit {
   displayedColumns: string[] = ['no', 'nama', 'harga', 'stok', 'aksi'];
   constructor(
     private serviceMenu: MenuService,
+    private router: Router,
+    private activeRoute : ActivatedRoute,
+    private location: Location,
+    private alert: AlertService,
     public dialog: MatDialog
   ) { }
   ngOnInit() {
-    this.serviceMenu.getMenu().subscribe((item) => {
+    if(window.history.state.id) {
+    this.serviceMenu.getMenuAdmin(window.history.state.id).subscribe((item) => {
       this.menu = item.map( o => {
         return {
           id: o.payload.doc.id,
@@ -26,6 +34,12 @@ export class SetelanComponent implements OnInit {
         } 
       });
     }); 
+  } else {
+    this.alert.sukses('Gerai tidak ditemukan', '1');
+    setTimeout(() => {
+      this.location.back();
+    }, 2000);
+  }
   }
   onDel(id, i) {
     this.serviceMenu.deleteMenu(id.id);

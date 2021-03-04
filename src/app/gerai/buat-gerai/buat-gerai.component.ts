@@ -17,8 +17,8 @@ import { Observable } from 'rxjs';
 export class BuatGeraiComponent implements OnInit {
 
   menu: Menu[];
-  form: FormGroup;
-  user : any[] = [];
+  gerai: FormGroup;
+  users = [];
   a : any[] = [];
   disableSelect = new FormControl(false);
   constructor(
@@ -27,80 +27,55 @@ export class BuatGeraiComponent implements OnInit {
     private UserService: UserService,
     public dialogRef: MatDialogRef<BuatGeraiComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { 
-    const dataUser = new Observable((observer) => {
-      this.UserService.getUser().subscribe( usr => {
-        const user : User[] = usr.map(item => {
-          return {
-            id: item.payload.doc.id,
-            ...item.payload.doc.data() as User
-          };
-        });
-        observer.next(user);
-      });
-    });
-    dataUser.subscribe((user: User[])=> {
-      user.forEach(item => {
-        if(!item.gerai) {
-          this.user = [item.email]
-        }
-        console.log(this.user)
-      });
-    })
-  }
+  ) { }
   ngOnInit() {
-    // this.getUser();
     this.buatGerai();
+    this.getUser();
     
-    // for(let i = 0; i < this.data.user.length; i++) {
-    //   return this.users.push(
-    //     this.data.user[i]
-    //   )
-    // }
-    // this.user = Array.of(this.data.user);
-    // this.a = [this.user[0]];
-    // console.log(this.data.user)
   }
     getUser() {
-    this.UserService.getUser().subscribe( usr =>{
-      const user = usr.map(item => {
-        return {
-          id: item.payload.doc.id,
-          ...item.payload.doc.data() as User
-        };
+    this.UserService.getUser().subscribe( usr => {
+      usr.map(item => {
+        if(!item.payload.doc.data()['gerai'] && item.payload.doc.data()['roles']['admin'] == false ) {
+          console.log('oke')
+          this.users.push({
+            ...item.payload.doc.data() as User
+          });
+        } 
       });
-      console.log(user);
+      if(this.data.gerai.user != null || this.data.gerai.user != undefined){
+        this.users.push(this.data.gerai.user)
+      }
     });
   }
   buatGerai() {
-    if(this.data == null) {
-      this.data.id = null;
-      this.data.namaGerai = null;
-      this.data.jamBuka = null;
-      this.data.jamTutup = null;
+   
+    if(this.data.gerai == null || this.data.gerai == undefined) {
+      this.data.gerai.id = null;
+      this.data.gerai.namaGerai = null;
+      this.data.gerai.jamBuka = null;
+      this.data.gerai.jamTutup = null;
+      this.data.gerai.user = null;
     }
-    this.form = this.formBuilder.group({
-      id: [this.data.id],
-      namaGerai: [this.data.namaGerai, ],
-      jamBuka: [this.data.jamBuka],
-      jamTutup: [this.data.jamTutup],
-      users: [this.data.user]
+    this.gerai = this.formBuilder.group({
+      id: [this.data.gerai.id],
+      namaGerai: [this.data.gerai.namaGerai],
+      jamBuka: [this.data.gerai.jamBuka],
+      jamTutup: [this.data.gerai.jamTutup],
+      user: [this.data.gerai.user]
     });
   }
   tambahGerai(value)  {
-    console.log(value)
+    let oldUser = this.data.user.uid;
+    let newUser = value.user;
+   const userData = this.users.find(({uid}) => uid === newUser )
     if (value.id == null) {
-      this.service.tambahGerai(value);
+      this.service.tambahGerai(value, userData);
       this.dialogRef.close();
     } else {
-      // this.service.updateMenu(value);
-      // this.dialogRef.close();
+      this.service.updateGerai(value, oldUser, userData);
+      this.dialogRef.close();
     }  
-  }
-  getusers() {
-    this.service.ambilUsers().subscribe( user => {
-      // this.user = 
-    })
   }
 
 }

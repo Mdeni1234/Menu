@@ -10,6 +10,8 @@ import { DeActiveGuard } from './_guard/de-active.guard';
 import { GeraiComponent } from './gerai/gerai.component';
 import { AdminGuard } from './_guard/admin.guard';
 import { CanReadGuard } from './_guard/can-read.guard';
+import { PageAksesComponent } from './page-akses/page-akses.component';
+import { UserGuard } from './_guard/user.guard';
 
 const routes: Routes = [
   { path: 'login', component: SignInComponent, canDeactivate: [DeActiveGuard] },
@@ -17,7 +19,8 @@ const routes: Routes = [
   { path: 'setelmenu', component: SetelanComponent, canActivate: [AdminGuard]},
   { path: 'penjualan', component: ListPesananComponent, canActivate: [AuthGuard]},
   { path: 'gerai', component: GeraiComponent, canActivate: [AdminGuard]},
-  { path: '**', redirectTo: 'menu'}
+  { path: 'akses', component: PageAksesComponent, canActivate: [UserGuard]},
+  { path: '**', redirectTo: 'akses'}
 ];
 
 @NgModule({

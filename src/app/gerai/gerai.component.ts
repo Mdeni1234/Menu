@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Menu } from '../_model/menu.model';
 import { MatMenuTrigger, MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule} from '@angular/material';
 import { BuatGeraiComponent } from './buat-gerai/buat-gerai.component';
-import { from } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { MenuService } from '../_service/menu.service';
 import { Gerai } from '../_model/gerai.model';
 import { GeraiService } from '../_service/gerai.service';
 import { User } from '../_model/user';
 import { Router } from '@angular/router';
+import { AuthService } from '../_service/auth.service';
 
 
 @Component({
@@ -17,23 +18,17 @@ import { Router } from '@angular/router';
 })
 export class GeraiComponent implements OnInit {
 
-  user : User[];
+  user : User;
   gerai : Gerai[];
   displayedColumns: string[] = ['no', 'gerai', 'buka', 'tutup', 'user', 'menu', 'aksi'];
   constructor(
     private serviceGerai: GeraiService,
+    private authUser: AuthService,
     private router : Router,
     public dialog: MatDialog
   ) { }
   ngOnInit() {
-    // this.serviceMenu.getMenu().subscribe((item) => {
-    //   this.menu = item.map( o => {
-    //     return {
-    //       id:o.payload.doc.id,
-    //       ...(o.payload.doc.data() as Menu)
-    //     } 
-    //   });
-    // }); 
+
     this.getusers();
     this.getGerai()
   }
@@ -48,27 +43,19 @@ export class GeraiComponent implements OnInit {
     })
   }
   getusers() {
-    this.serviceGerai.ambilUsers().subscribe((user) => {
-      this.user = user.map((value) => {
-        return {
-          id: value.payload.doc.id,
-          ...(value.payload.doc.data() as User)
-        };
-      });
+    this.authUser.user$.subscribe((user) => {
+      return this.user = user
     })
   }
   onDel(id, i) {
     this.serviceGerai.deleteGerai(id.id);
   }
-  tambahGerai(): void{
-    let users = this.user;
-    const data = {
-      user: users
-    }
+  tambahGerai(): void {
+    const gerai = {gerai:Gerai};
     const dialogRef = this.dialog.open(BuatGeraiComponent, {
       maxWidth: '90%',
       maxHeight: '90%',
-      data: data
+      data: gerai
     })
     dialogRef.afterClosed().subscribe( res => {
       setTimeout( () => { 
@@ -78,7 +65,7 @@ export class GeraiComponent implements OnInit {
   }
  sendData(gerai: Gerai) {
    console.log(gerai);
-   this.router.navigateByUrl('/setelmenu', {state: {id: gerai.id}});
+   this.router.navigateByUrl('/setelmenu', {state: {id: gerai.id, gerai}});
   // const dialogRef = this.dialog.open(BuatGeraiComponent, {
   //   maxWidth: '90%',
   //   maxHeight: '90%',

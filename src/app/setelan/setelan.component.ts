@@ -7,6 +7,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Location} from '@angular/common';
 import { AlertService } from '../_service/alert.service';
+import { BuatGeraiComponent } from '../gerai/buat-gerai/buat-gerai.component';
 
 @Component({
   selector: 'app-setelan',
@@ -26,7 +27,7 @@ export class SetelanComponent implements OnInit {
   ) { }
   ngOnInit() {
     if(window.history.state.id) {
-    this.serviceMenu.getMenuAdmin(window.history.state.id).subscribe((item) => {
+    this.serviceMenu.getMenuAdmin(window.history.state.gerai.id).subscribe((item) => {
       this.menu = item.map( o => {
         return {
           id: o.payload.doc.id,
@@ -64,5 +65,14 @@ export class SetelanComponent implements OnInit {
   });
   dialogRef.afterClosed().subscribe(res => this.ngOnInit()
   );
- }  
+ }
+ onEditGerai() {
+  const dialogRef = this.dialog.open(BuatGeraiComponent, {
+    maxWidth: '90%',
+    maxHeight: '90%',
+    data: window.history.state
+  });
+  dialogRef.afterClosed().subscribe(res => this.ngOnInit()
+  );
+ }    
 }

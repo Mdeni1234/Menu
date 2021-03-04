@@ -36,6 +36,7 @@ import { APP_INITIALIZER } from '@angular/core';
 import { GeraiComponent } from './gerai/gerai.component';
 import { BuatGeraiComponent } from './gerai/buat-gerai/buat-gerai.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { PageAksesComponent } from './page-akses/page-akses.component';
 const modules = [
   Material.MatCardModule,
   Material.MatInputModule,
@@ -67,6 +68,7 @@ const modules = [
     HasilPenjualanComponent,
     GeraiComponent,
     BuatGeraiComponent,
+    PageAksesComponent,
   ],
   imports: [
     BrowserModule,

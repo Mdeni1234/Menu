@@ -24,15 +24,16 @@ export class MenuComponent implements OnInit {
     this.buatMenu();
   }
   buatMenu() {
-    if(this.data == null) {
-      this.data.id = null;
-      this.data.hargaMenu = null;
-      this.data.namaMenu = null;
-      this.data.stok = null;
-    }
+    // console.log(this.data == null)
+    // if(this.data == null) {
+    //   this.data.id = null;
+    //   this.data.hargaMenu = null;
+    //   this.data.namaMenu = null;
+    //   this.data.stok = null;
+    // }
     this.form = this.formBuilder.group({
       id: [this.data.id],
-      namaMenu: [this.data.namaMenu, ],
+      namaMenu: [this.data.namaMenu],
       hargaMenu: [this.data.hargaMenu, [ Validators.pattern('[0-9]+[0-9]')]],
       stok: [this.data.stok, [ Validators.pattern('[0-9]+[0-9]?')]]
     });

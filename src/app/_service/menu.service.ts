@@ -40,8 +40,8 @@ export class MenuService {
    getGerai(usr: any) {
      return this.geraiService.ambilGerai().subscribe( val => {
       val.forEach( a => {
-        let b = a.payload.doc.data()['user'];
-        if (b == usr.email ) {
+        let b = a.payload.doc.data()['user']['uid'];
+        if (b == usr.uid ) {
           return this.gerai = {
             id : a.payload.doc.id,
             profile : a.payload.doc.data(),

@@ -5,7 +5,7 @@
           <mat-card-subtitle>Setting Form untuk menu</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-                <form class="example-form" [formGroup]="form" >
+                <form class="example-form" [formGroup]="gerai" >
                   <input type="hidden" formControlName="id"  >
                         <mat-form-field class="example-full-width">
                             <input  matInput placeholder="Nama Gerai" formControlName="namaGerai" name="namaGerai" #namaGerai>
@@ -15,18 +15,18 @@
                             <ngx-material-timepicker #min ></ngx-material-timepicker>
                         </mat-form-field> 
                         <mat-form-field class="example-full-width">
-                          <input [ngxTimepicker]="max" max="01:00 am" matInput placeholder="Jam Tutup" formControlName="jamTutup" name="jamBuka" #jamTutup readonly>
+                          <input [ngxTimepicker]="max" max="01:00 am" matInput placeholder="Jam Tutup" formControlName="jamTutup" name="jamTutup" #jamTutup readonly>
                           <ngx-material-timepicker #max></ngx-material-timepicker>
                         </mat-form-field>
                           <mat-form-field class="example-full-width">
                             <mat-label>Choose an option</mat-label>
-                            <mat-select formControlName="users" name="users" #users>
-                              <mat-option  *ngFor="let user of a; let i = index" value="{{user.email}}">
-                                {{a}}
+                            <mat-select formControlName="user" name="user" #user>
+                              <mat-option  *ngFor="let usr of users; let i = index" value="{{usr.uid}}">
+                                {{usr.email}}
                               </mat-option>
                             </mat-select>
                       </mat-form-field>
-                        <button mat-flat-button color="primary" (click)="tambahGerai(form.value)" [disabled]="form.pristine || form.invalid">Save</button>
+                        <button mat-flat-button color="primary" (click)="tambahGerai(gerai.value)" [disabled]="gerai.pristine || gerai.invalid">Save</button>
                       </form>
         </mat-card-content>
       </mat-card>

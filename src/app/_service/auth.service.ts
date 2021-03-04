@@ -34,7 +34,6 @@ export class AuthService {
             return of(null)
           }
         }))
-  
   }
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
@@ -65,7 +64,10 @@ export class AuthService {
     this.router.navigate(['/']);
     return userRef.set(data, { merge: true })
   }
-
+  isGerai(user: User): boolean {
+    const allowed = ['user']
+    return this.checkGeraiAuthorization(user, allowed)
+  }
   isUser(user: User): boolean {
     const allowed = ['user']
     return this.checkAuthorization(user, allowed)
@@ -76,11 +78,24 @@ export class AuthService {
     return this.checkAuthorization(user, allowed)
   }
   
+  private checkGeraiAuthorization(user: User, allowedRoles: string[]): boolean {
+    if (!user) return false
+    for (const role of allowedRoles) {
+      if ( user.roles[role] == true ) {
+        if(user.gerai) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+    return false
+  }
   private checkAuthorization(user: User, allowedRoles: string[]): boolean {
     if (!user) return false
     for (const role of allowedRoles) {
       if ( user.roles[role] == true ) {
-        return true
+          return true
       }
     }
     return false

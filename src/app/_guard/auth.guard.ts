@@ -20,14 +20,15 @@ export class AuthGuard implements CanActivate {
 
     return this.auth.user$.pipe(
       take(1),
-      map(user => user && user.roles.admin || user.roles.user ? true : false),
+      map(user => user && this.auth.isAdmin(user) || this.auth.isGerai(user) ? true : false),
       tap(isAdmin => {
         if (!isAdmin) {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/akses']);
+          console.error('cant access')
         }
         this.alert.show(); 
       })
     );
-
+  
   }
 }

@@ -94,7 +94,7 @@ export class NavbarComponent implements OnInit {
   }
   logout() {
     if (confirm('Anda akan Logout?')) {
-    this.authService.signOut();
+    this.authService.googleLogin();
     this.router.navigate(['/login']);
     }
 }

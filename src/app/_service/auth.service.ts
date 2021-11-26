@@ -21,20 +21,30 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   
     user$: Observable<User>;
+    gerai$: Observable<any>;
 
   constructor(private afAuth: AngularFireAuth,
               private afs: AngularFirestore,
               private router: Router
               ) {
-      this.user$ = this.afAuth.authState
-        .pipe(switchMap(user => {
-          if (user) {
-            return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
-          } else {
-            return of(null)
-          }
-        }))
+                this.user$ = this.afAuth.authState
+                .pipe(switchMap(user => {
+                  if (user) {
+                    return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+                  } else {
+                    return of(null)
+                  }
+                }))
+ 
+              this.afAuth.authState.subscribe(res => {
+                if (res && res.uid) {
+                  console.log('user is logged in');
+                } else {
+                  console.log(res);
+                }
+              });
   }
+
   googleLogin() {
     const provider = new firebase.auth.GoogleAuthProvider();
     return this.oAuthLogin(provider);
@@ -48,7 +58,12 @@ export class AuthService {
   }
 
   signOut() {
-    this.afAuth.auth.signOut()
+    firebase.auth().signOut().then(() => {
+    }).catch((error) => {
+      console.log('asdasd '+ error)
+
+    });
+    
   }
 
   private updateUserData(user) {

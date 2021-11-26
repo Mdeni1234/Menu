@@ -13,18 +13,18 @@ import { CanReadGuard } from './_guard/can-read.guard';
 import { PageAksesComponent } from './page-akses/page-akses.component';
 import { UserGuard } from './_guard/user.guard';
 
+
 const routes: Routes = [
   { path: 'login', component: SignInComponent, canDeactivate: [DeActiveGuard] },
-  { path: 'menu', component: MainMenuComponent, canActivate: [CanReadGuard]},
-  { path: 'setelmenu', component: SetelanComponent, canActivate: [AdminGuard]},
-  { path: 'penjualan', component: ListPesananComponent, canActivate: [AuthGuard]},
-  { path: 'gerai', component: GeraiComponent, canActivate: [AdminGuard]},
-  { path: 'akses', component: PageAksesComponent, canActivate: [UserGuard]},
+  { path: 'menu', component: MainMenuComponent},
+  { path: 'setelmenu', component: SetelanComponent},
+  { path: 'penjualan', component: ListPesananComponent},
+  { path: 'gerai', component: GeraiComponent},
+  { path: 'akses', component: PageAksesComponent},
   { path: '**', redirectTo: 'akses'}
 ];
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
+@NgModule({  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

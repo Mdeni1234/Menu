@@ -16,7 +16,7 @@
                     <mat-form-field class="example-full-width">
                         <input matInput placeholder="Jumlah Stok" formControlName="stok" name="stok" #stok>
                     </mat-form-field>
-                    <button mat-flat-button color="primary" (click)="tambahMenu(form.value)" [disabled]="form.pristine || form.invalid">Save</button>
+                    <button type="button"  color="primary" (click)="tambahMenu(form.value)" [disabled]="form.pristine || form.invalid">Save</button>
                   </form>
     </mat-card-content>
   </mat-card>

@@ -3,10 +3,11 @@
 // below defines your custom color to build a theme palette from
 @import '~@angular/material/theming';
 @include mat-core();
+@import '~saturn-datepicker/theming';
 $mat-myapp-primary : (
   50 : #eae7e6,
     100 : #cac2c0,
-    200 : #a79a97,
+    200 : #88321e,
     300 : #84716d,
     400 : #69524d,
     500 : #4f342e,
@@ -74,6 +75,8 @@ $my-app-primary: mat-palette($mat-myapp-primary);
 $my-app-accent:  mat-palette($mat-myapp-accent);
 $my-app-theme: mat-light-theme($my-app-primary, $my-app-accent);
 @include angular-material-theme($my-app-theme);
+@include sat-datepicker-theme($my-app-theme);
+
 
 // body {
 //     margin: 0;

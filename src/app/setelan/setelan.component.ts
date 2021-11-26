@@ -29,27 +29,30 @@ export class SetelanComponent implements OnInit {
     if(window.history.state.id) {
     this.serviceMenu.getMenuAdmin(window.history.state.gerai.id).subscribe((item) => {
       this.menu = item.map( o => {
+        console.log(o.payload.doc.id)
         return {
+          idGerai: window.history.state.gerai.id,
           id: o.payload.doc.id,
           ...(o.payload.doc.data()) as Menu
         } 
       });
     }); 
   } else {
+    console.log('sdas')
     this.alert.sukses('Gerai tidak ditemukan', '1');
     setTimeout(() => {
       this.location.back();
     }, 2000);
   }
   }
-  onDel(id, i) {
-    this.serviceMenu.deleteMenu(id.id);
+  onDel(idGerai, id,) {
+    this.serviceMenu.deleteMenu(idGerai, id);
   }
   onTambah(): void{
     const dialogRef = this.dialog.open(MenuComponent, {
       maxWidth: '90%',
       maxHeight: '90%',
-      data: Menu
+      data: {idGerai: window.history.state.gerai.id, menu: this.menu}
     })
     dialogRef.afterClosed().subscribe( res => {
       setTimeout( () => { 

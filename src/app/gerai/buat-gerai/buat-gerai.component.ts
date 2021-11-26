@@ -36,12 +36,14 @@ export class BuatGeraiComponent implements OnInit {
     getUser() {
     this.UserService.getUser().subscribe( usr => {
       usr.map(item => {
+        console.log(item.payload.doc.data())
         if(!item.payload.doc.data()['gerai'] && item.payload.doc.data()['roles']['admin'] == false ) {
           console.log('oke')
           this.users.push({
             ...item.payload.doc.data() as User
           });
         } 
+        console.log(this.users)
       });
       if(this.data.gerai.user != null || this.data.gerai.user != undefined){
         this.users.push(this.data.gerai.user)
@@ -66,13 +68,13 @@ export class BuatGeraiComponent implements OnInit {
     });
   }
   tambahGerai(value)  {
-    let oldUser = this.data.user.uid;
     let newUser = value.user;
    const userData = this.users.find(({uid}) => uid === newUser )
     if (value.id == null) {
       this.service.tambahGerai(value, userData);
       this.dialogRef.close();
     } else {
+      let oldUser = this.data.user.uid;
       this.service.updateGerai(value, oldUser, userData);
       this.dialogRef.close();
     }  

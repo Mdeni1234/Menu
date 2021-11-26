@@ -1,5 +1,6 @@
 
 export class Pesanan {
+    idGerai?: string;
     namaGerai?: string;
     tag?: number;
     waktu?: any;

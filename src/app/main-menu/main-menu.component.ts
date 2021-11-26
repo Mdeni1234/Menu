@@ -150,7 +150,7 @@ timer: any;
             console.log(control)
             this.serviceMenu.updateStokMenu(i, n);
             }
-        // this.servicePesanan.addPesanan(z,hasil, this.form.value);
+        this.servicePesanan.addPesanan(z, hasil, this.form.value);
         const dialogRef = this.dialog.open(NotifComponent, {
           width: '80%',
           data: {length: z, hasil: hasil, form: this.form.value}

@@ -37,6 +37,9 @@ import { GeraiComponent } from './gerai/gerai.component';
 import { BuatGeraiComponent } from './gerai/buat-gerai/buat-gerai.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { PageAksesComponent } from './page-akses/page-akses.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { SatNativeDateModule, SatDatepickerModule } from 'saturn-datepicker'
+
 const modules = [
   Material.MatCardModule,
   Material.MatInputModule,
@@ -51,7 +54,16 @@ const modules = [
   Material.MatDialogModule,
   Material.MatFormFieldModule,
   Material.MatTabsModule,
-  Material.MatSelectModule
+  Material.MatSelectModule,
+  Material.MatNativeDateModule,
+  Material.MatDatepickerModule,
+  Material.MatFormFieldModule,
+  Material.MatDatepickerModule,
+  Material.MatNativeDateModule,
+  Material.MatFormFieldModule,
+  Material.MatInputModule,
+  SatNativeDateModule,
+  SatDatepickerModule
 ];
 @NgModule({
   declarations: [
@@ -93,7 +105,7 @@ const modules = [
     AuthService,
     AngularFireAuth,
     AlertService,
-    JadwalService,
+    // JadwalService,
     // fakeBackendProvider,
     // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

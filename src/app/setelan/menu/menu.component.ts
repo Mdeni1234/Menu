@@ -31,7 +31,9 @@ export class MenuComponent implements OnInit {
     //   this.data.namaMenu = null;
     //   this.data.stok = null;
     // }
+    console.log(this.data)
     this.form = this.formBuilder.group({
+      idGerai: [this.data.idGerai],
       id: [this.data.id],
       namaMenu: [this.data.namaMenu],
       hargaMenu: [this.data.hargaMenu, [ Validators.pattern('[0-9]+[0-9]')]],

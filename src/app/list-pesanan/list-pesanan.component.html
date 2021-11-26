@@ -37,5 +37,17 @@
                         
                     </mat-card-actions>
                 </ng-container>
+                <mat-card-actions>
+                    <mat-form-field [formGroup]="form">
+                        <input matInput
+                            placeholder="Choose a date"
+                            [satDatepicker]="picker"
+                            [value]="date"
+                            formControlName="date">
+                        <sat-datepicker #picker [rangeMode]="true"></sat-datepicker>
+                        <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
+                      </mat-form-field>
+                    <button mat-flat-button color="primary" type="submit" (click)="onFilter(form.value)" class="submit" [disabled]="!form.valid">Tambahkan Filter</button>
+                </mat-card-actions>
             </mat-card>
     

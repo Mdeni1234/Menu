@@ -148,7 +148,7 @@ export class PesananService {
 })
     
   }
-  async setPenjualanFinal(pendapatan, transaksi, penjualan, date1, date2, id, nama){
+  setPenjualanFinal(pendapatan, transaksi, penjualan, date1, date2, id, nama){
     const penjualanGerai = {
       idGerai: id,
       namaGerai: nama,

@@ -1,10 +1,14 @@
 export class Penjualan {
         tag: number;
-        penjualan: [{
-            terjual: number,
-            namaPesanan: string,
+        idGerai: string;
+        namaGerai: string;
+        pendapatanGerai: number;
+        penjualanGerai: [{
+            terjual: number;
+            namaMenu: string;
         }];
-        jumlahPenjualan: number;
-        hasilPenjualan: number;
+        jumlahTransaksi: number;
+        startDate: Date;
+        endDate: Date;
         
 }

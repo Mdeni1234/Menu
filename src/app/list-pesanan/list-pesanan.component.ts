@@ -17,7 +17,7 @@ export class ListPesananComponent implements OnInit {
   pesanan;
   penjualan;
   gabungan;
-
+  status: boolean
   form = new FormGroup({
     "date": new FormControl("", Validators.required),
 });
@@ -27,18 +27,32 @@ export class ListPesananComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.service.getPesanan().subscribe( data => {
-      this.pesanan = data.map(o => {
-        return {
-          id : o.payload.doc.id,
-          ...(o.payload.doc.data() as Pesanan)
-        } 
-      });
-      console.log(this.pesanan)
+    this.service.getPenjualan().subscribe(res => {
+      if(res.length > 0) {
+        this.status = true
+        this.pesanan = res.map(o => {
+          return {
+            id : o.payload.doc.id,
+            ...(o.payload.doc.data() as Penjualan)
+          }
+        })
+      } else {
+        this.status = false
+        this.service.getPesanan().subscribe( data => {
+          this.pesanan = data.map(o => {
+            return {
+              id : o.payload.doc.id,
+              ...(o.payload.doc.data() as Pesanan)
+            } 
+          });
+          console.log(this.pesanan)
+        })
+      }
     })
+    
   }
   onFilter(value) {
-    this.service.getPenjualan(value.date.begin, value.date.end)
+    this.service.setPenjualan(value.date.begin, value.date.end)
   }
 
 }

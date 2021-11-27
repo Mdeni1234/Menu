@@ -1,6 +1,6 @@
 
-<mat-card *ngFor=" let pesanan of pesanan">
-    <ng-container *ngIf="pesanan.tag == 1">
+<mat-card *ngFor="let pesanan of pesanan">
+    <ng-container *ngIf="!status">
             <mat-card-header>
                     <mat-card-title>Penjualan</mat-card-title>
                     <mat-card-subtitle> {{pesanan.waktu.toDate() | date:'M/d/yy, h:mm a' | timeAgo }}</mat-card-subtitle>
@@ -15,29 +15,29 @@
                     <p> Rp. {{ pesanan.jumlah }}</p>
                 </mat-card-actions>
     </ng-container>
-    <ng-container *ngIf="pesanan.tag == 2">
+    <ng-container *ngIf="status">
                     <mat-card-header>
-                        <mat-card-title>Hasil Penjualan</mat-card-title>
-                        <mat-card-subtitle> {{pesanan.waktu.toDate() | date:'M/d/yy, h:mm a'  | timeAgo }}</mat-card-subtitle>
+                        <mat-card-title>Penjualan Gerai {{pesanan.namaGerai}}</mat-card-title>
+                        <mat-card-subtitle> {{pesanan.startDate | date:'M/d' }} - {{pesanan.endDate | date: 'M/d/y'</mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
                         <p *ngFor="let jual of pesanan.penjualan;">
-                            {{jual.namaPesanan}} ({{jual.terjual}})
+                            {{jual.namaMenu}} ({{jual.terjual}})
                         </p>
                     </mat-card-content>
                     <mat-card-actions class="jual">
                         <div class="col-4">
                                 <mat-card-subtitle > Jumlah Transaksi </mat-card-subtitle>
-                                <p> Quantity : {{ pesanan.jumlahPenjualan }}</p>
+                                <p> Quantity : {{ pesanan.jumlahTransaksi }}</p>
                         </div>
                         <div class="col-6">
                                 <mat-card-subtitle> Hasil Penjualan </mat-card-subtitle>
-                                <p> Rp.{{ pesanan.hasilPenjualan }}</p>
+                                <p> Rp.{{ pesanan.pendapatanGerai }}</p>
                         </div>
                         
                     </mat-card-actions>
                 </ng-container>
-                <mat-card-actions>
+                <mat-card-actions *ngIf="!status;">
                     <mat-form-field [formGroup]="form">
                         <input matInput
                             placeholder="Choose a date"
@@ -48,6 +48,9 @@
                         <sat-datepicker-toggle matSuffix [for]="picker"></sat-datepicker-toggle>
                       </mat-form-field>
                     <button mat-flat-button color="primary" type="submit" (click)="onFilter(form.value)" class="submit" [disabled]="!form.valid">Tambahkan Filter</button>
+                </mat-card-actions>
+                <mat-card-actions *ngIf="status;">
+                    <button mat-flat-button color="primary" type="submit" (click)="this.service.resetPenjualan()" class="submit">Reset Filter</button>
                 </mat-card-actions>
             </mat-card>
     

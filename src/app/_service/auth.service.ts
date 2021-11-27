@@ -21,7 +21,6 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   
     user$: Observable<User>;
-    gerai$: Observable<any>;
 
   constructor(private afAuth: AngularFireAuth,
               private afs: AngularFirestore,

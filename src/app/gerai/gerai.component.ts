@@ -6,7 +6,7 @@ import { from, Observable } from 'rxjs';
 import { MenuService } from '../_service/menu.service';
 import { Gerai } from '../_model/gerai.model';
 import { GeraiService } from '../_service/gerai.service';
-import { User } from '../_model/user';
+import { User } from '../_model/user.model';
 import { Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
 
@@ -47,8 +47,8 @@ export class GeraiComponent implements OnInit {
       return this.user = user
     })
   }
-  onDel(id, i) {
-    this.serviceGerai.deleteGerai(id.id);
+  onDel(gerai, i) {
+    this.serviceGerai.deleteGerai(gerai);
   }
   tambahGerai(): void {
     const gerai = {gerai:Gerai};

@@ -27,18 +27,27 @@ export class PesananService {
     private geraiService: GeraiService
   ) {
 
-    this.setUser();
+    this.auth.user$.subscribe(res => {
+      if(res !== null) {
+        return this.getGerai(res);
+      }
+    });
    }
     getPenjualan()  {
-     return this.firestore.collection('penjualan').snapshotChanges()
+     return this.firestore.collection('monitor').snapshotChanges()
   }
 
-   resetPenjualan(){
-     let penjualan = this.firestore.collection('penjualan')
+   resetPenjualan(status){
+     let st = status
+     let penjualan = this.firestore.collection('monitor')
      penjualan.snapshotChanges().subscribe(doc => {
        doc.forEach(res => {
+         if(st) {
+           console.log(st)
          return penjualan.doc(res.payload.doc.id).delete()
+         }
        })
+       st= false
      })
    }
   
@@ -83,17 +92,17 @@ export class PesananService {
       status,
       raw
     };
-    this.firestore.collection('pesanan').add(pemesanan);
+    this.firestore.collection('transaksi').add(pemesanan);
     this.alert.sukses('Pesanan telah ditambahkan :)', '1');
   
     }
     hitungPesanan() {
-      return this.firestore.collection('pesanan', pesan => pesan.where('status', '==', false)).snapshotChanges();
+      return this.firestore.collection('transaksi', pesan => pesan.where('status', '==', false)).snapshotChanges();
     }
     gantiStatus(a) {
-     this.firestore.collection('pesanan').get().toPromise().then((data) => {
+     this.firestore.collection('transaksi').get().toPromise().then((data) => {
        data.forEach( doc => {
-         const pesanan = this.firestore.collection('pesanan').doc(doc.id);
+         const pesanan = this.firestore.collection('transaksi').doc(doc.id);
          return pesanan.update({
            status: a
          });
@@ -103,26 +112,26 @@ export class PesananService {
      });
   }
   getPesanan()  {
-      return this.firestore.collection('pesanan', pesan => pesan.orderBy('waktu', 'desc')).snapshotChanges();
+      return this.firestore.collection('transaksi', pesan => pesan.orderBy('waktu', 'desc')).snapshotChanges();
   }
    setPenjualan(dateBegin, dateEnd)  {
     let begin = new Date(dateBegin);
     let end = new Date(dateEnd);
-    let date1 = firebase.firestore.Timestamp.fromDate(dateBegin).toDate()
-    let date2 = firebase.firestore.Timestamp.fromDate(dateEnd).toDate()
+    console.log(dateBegin, dateEnd)
     let geraiData = this.firestore.collection('gerai').snapshotChanges();
     let menu = (id : string) => this.firestore.collection('gerai').doc(id).collection('menu').snapshotChanges()
-    let pesanan = (id , begin,end) =>  this.firestore.collection('pesanan', pesan => pesan.where('idGerai', '==', id).where('waktu', '>', begin).where('waktu', '<', end)).get().toPromise()    
+    let pesanan = (id , begin,end) =>  this.firestore.collection('transaksi', pesan => pesan.where('idGerai', '==', id).where('waktu', '>=', begin).where('waktu', '<=', end)).get().toPromise()    
     geraiData.subscribe(res => {
         res.forEach(resGerai => {
           let idGerai = resGerai.payload.doc.id;
-          let namaGerai = resGerai.payload.doc.data()['namaGerai']
+          let namaGerai = resGerai.payload.doc.data()['namaGerai'];
           let pendapatan: number = 0;
           let transaksi: number = 0;
           const penjualan = []        
            menu(idGerai).subscribe(resMenu => {
              pesanan(idGerai, begin, end).then(resPesanan => {
               transaksi = resPesanan.docs.length;
+              console.log(transaksi)
               resMenu.forEach( itemMenu => {
                 let terjual = 0;
                 let namaPesanan = itemMenu.payload.doc.data().namaMenu;
@@ -141,7 +150,7 @@ export class PesananService {
                     })
                    }
                   })
-                  this.setPenjualanFinal(pendapatan, transaksi, penjualan,dateBegin, dateEnd, idGerai,namaGerai)
+                  return this.setPenjualanFinal(pendapatan, transaksi, penjualan,dateBegin, dateEnd, idGerai,namaGerai)
                 })
               })
     })
@@ -159,7 +168,9 @@ export class PesananService {
       endDate: date2
     }
     console.log(penjualanGerai)
-    // this.firestore.collection('penjualan').add(penjualanGerai);
+    return this.firestore.collection('monitor').add(penjualanGerai).catch(err => {
+      console.log(err)
+    });
 
   }
  

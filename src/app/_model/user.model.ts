@@ -1,10 +1,10 @@
 export interface Roles { 
-    user?: boolean;
-    admin?: boolean;
+    kasir?: boolean;
+    owner?: boolean;
  }
 export class User {
     uid: string;
-    email: string;
     gerai: boolean;
+    email: string;
     roles: Roles;
 }

@@ -1,4 +1,7 @@
 form {
+  .head{
+    margin: 70px auto;
+  }
   height: 90%;
     mat-card {
     width: 100%;
@@ -13,13 +16,14 @@ form {
     }
   }
   .submit {
-    width: 100%;
-    border-radius: 0;
-    position: fixed;
-    bottom: 0%;
+    width: 80%;
+    left: 0;
     right: 0;
-    left: 0; 
-    text-align: center;
+    margin: auto;
+    bottom: 3%;
+    height: 50px;
+    border-radius: 20px;
+    position: fixed;
   }
 }
 .example-full-width {

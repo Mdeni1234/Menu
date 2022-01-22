@@ -16,12 +16,12 @@ import { UserGuard } from './_guard/user.guard';
 
 const routes: Routes = [
   { path: 'login', component: SignInComponent, canDeactivate: [DeActiveGuard] },
-  { path: 'menu', component: MainMenuComponent},
-  { path: 'setelmenu', component: SetelanComponent},
+  { path: 'menu', component: MainMenuComponent, canActivate: [CanReadGuard]},
+  { path: 'setelmenu', component: SetelanComponent, canActivate: [AdminGuard]},
   { path: 'penjualan', component: ListPesananComponent},
-  { path: 'gerai', component: GeraiComponent},
+  { path: 'gerai', component: GeraiComponent, canActivate: [AdminGuard]},
   { path: 'akses', component: PageAksesComponent},
-  { path: '**', redirectTo: 'akses'}
+  { path: '**', redirectTo: 'penjualan'}
 ];
 
 @NgModule({  imports: [RouterModule.forRoot(routes)],

@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
       map(user => user && this.auth.isAdmin(user) || this.auth.isGerai(user) ? true : false),
       tap(isAdmin => {
         if (!isAdmin) {
-          this.router.navigate(['/akses']);
+          this.router.navigate(['/penjualan']);
           console.error('cant access')
         }
         this.alert.show(); 

@@ -3,5 +3,4 @@ export class Menu {
     namaMenu: string;
     hargaMenu: string;
     stok: number;
-
 }

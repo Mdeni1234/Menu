@@ -22,9 +22,12 @@ export class SignInComponent implements OnInit {
       private alertService: AlertService
   ) {
       // redirect to home if already logged in
-      if (this.authenticationService.user$ != null) {
+      this.authenticationService.user$.subscribe( a => {
+        if (a != null) {
           this.router.navigate(['/']);
       }
+      })
+      
   }
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 import { Component, OnInit, NgModule } from '@angular/core';
-import { User } from '../_model/user';
+import { User } from '../_model/user.model';
 import { MenuService } from '../_service/menu.service';
 import { AuthService } from '../_service/auth.service';
 import { Router } from '@angular/router';
@@ -94,8 +94,7 @@ export class NavbarComponent implements OnInit {
   }
   logout() {
     if (confirm('Anda akan Logout?')) {
-    this.authService.googleLogin();
-    this.router.navigate(['/login']);
+    this.authService.checkSignIn();
     }
 }
 

@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "pesanan",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "idGerai",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "waktu",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -15,7 +15,7 @@ import { HasilPenjualanComponent } from '../list-pesanan/hasil-penjualan/hasil-p
 import { Penjualan } from '../_model/penjualan.model';
 import { AuthService } from './auth.service';
 import { GeraiService } from './gerai.service';
-import { User } from '../_model/user';
+import { User } from '../_model/user.model';
 
 
 
@@ -26,7 +26,7 @@ import { User } from '../_model/user';
 export class MenuService {
   uri = 'http://localhost:5000/menu';
   formData: Menu;
-  gerai;
+
 
   constructor(
     private alert: AlertService,
@@ -35,37 +35,10 @@ export class MenuService {
     private auth: AuthService,
     private geraiService: GeraiService
   ) {
-    this.setUser()
+   
+    
   }
-   getGerai(usr: any) {
-     return this.geraiService.ambilGerai().subscribe( val => {
-      val.forEach( a => {
-        let b = a.payload.doc.data()['user'];
-        console.log(usr)
-        if (b.uid == usr.uid ) {
-          return this.gerai = {
-            id : a.payload.doc.id,
-            profile : a.payload.doc.data(),
-          }
-        }
-      });
-      });
-  }
-   setUser() {
-    return this.auth.user$.subscribe(usr => {
-      return this.geraiService.ambilGerai().subscribe( val => {
-        val.forEach( a => {
-          let b = a.payload.doc.data()['user'];
-          if (b.uid == usr.uid ) {
-            return this.gerai = {
-              id : a.payload.doc.id,
-              profile : a.payload.doc.data(),
-            }
-          }
-        });
-        });
-    });
-  }
+  
   addMenu(value: any ) {
     // tslint:disable-next-line: prefer-const
     let namaMenu = value.namaMenu;
@@ -83,17 +56,17 @@ export class MenuService {
   updateMenu(updateMenu: any) {
     this.firestore.collection('gerai').doc(updateMenu.idGerai).collection('menu').doc(updateMenu.id).update(updateMenu);
   }
-  updateStokMenu(id, update) {
+  updateStokMenu(id, update, idGerai) {
     console.log(id, update);
-    this.firestore.collection('gerai').doc(this.gerai.id).collection('menu').doc(id).update({stok: update});
+    this.firestore.collection('gerai').doc(idGerai).collection('menu').doc(id).update({stok: update});
   }
   deleteMenu(idGerai, id) {
     this.firestore.collection('gerai').doc(idGerai).collection('menu').doc(id).delete();
   }
   
-  getMenu() {
-    let gerai = this.gerai.id
-    return this.firestore.collection('gerai').doc(this.gerai.id).collection('menu').snapshotChanges();
+  getMenu(id) {
+    console.log(id)
+    return this.firestore.collection('gerai').doc(id).collection('menu').snapshotChanges();
   }
   getMenuAdmin(id:string) {
     return this.firestore.collection('gerai').doc(id).collection('menu').snapshotChanges();

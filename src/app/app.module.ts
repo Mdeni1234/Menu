@@ -31,7 +31,6 @@ import { AlertService } from './_service/alert.service';
 import { UserService } from './_service/user.service';
 import { HasilPenjualanComponent } from './list-pesanan/hasil-penjualan/hasil-penjualan.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { JadwalService } from './_service/jadwal.service';
 import { APP_INITIALIZER } from '@angular/core';
 import { GeraiComponent } from './gerai/gerai.component';
 import { BuatGeraiComponent } from './gerai/buat-gerai/buat-gerai.component';

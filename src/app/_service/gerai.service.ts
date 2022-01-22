@@ -34,6 +34,9 @@ export class GeraiService {
   ambilGerai() {
     return this.firestore.collection('gerai').snapshotChanges();
   }
+  getGerai(uid){
+    return this.firestore.collection('gerai', gerai=> gerai.where('user.uid', '==', uid)).get();
+  }
   updateGerai(value: any, oldUserId: any, userData:any) {
     let namaGerai = value.namaGerai;
     let jamBuka = value.jamBuka;
@@ -47,14 +50,18 @@ export class GeraiService {
       uid: userData.uid
       }
     }
+    console.log(oldUserId, gerai.user.uid)
+
     this.firestore.collection('gerai').doc(value.id).update(gerai);
     this.firestore.collection('users').doc(userData.uid).update({gerai:true});
-    if (gerai.user != oldUserId ) {
+    if (gerai.user.uid !== oldUserId ) {
       this.firestore.collection('users').doc(oldUserId).update({gerai: false});
     }
   }
-  deleteGerai(geraiId: string) {
-    this.firestore.collection('gerai').doc(geraiId).delete()
+  deleteGerai(gerai) {
+    this.firestore.collection('gerai').doc(gerai.id).delete()
+    this.firestore.collection('users').doc(gerai.user.uid).update({gerai: false});
+
   }
   ambilUsers() {
       return this.firestore.collection('users').snapshotChanges();

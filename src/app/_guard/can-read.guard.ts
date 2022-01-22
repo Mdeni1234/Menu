@@ -22,7 +22,7 @@ export class CanReadGuard implements CanActivate {
         tap(user => {
           if (!user) {
             console.error('Access denied - users only');
-            this.router.navigate(['/akses']);
+            this.router.navigate(['/penjualan']);
           }
         })
       );

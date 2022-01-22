@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { NotifComponent } from './notif/notif.component';
 import { Observable } from 'rxjs';
 import { PesananService } from '../_service/pesanan.service';
+import { AuthService } from '../_service/auth.service';
 
 @Component({
   selector: 'app-main-menu',
@@ -19,12 +20,14 @@ menu: Menu[];
 form: FormGroup;
 Pesanan: number;
 timer: any;
+idGerai: string;
 
 
 
   constructor(
     private serviceMenu: MenuService,
     private servicePesanan: PesananService,
+    private auth: AuthService,
     private builder: FormBuilder,
     private alert: AlertService,
     public dialog: MatDialog
@@ -32,11 +35,22 @@ timer: any;
 
   ngOnInit() {
     this.create();
-    this.getForm() 
+    this.auth.gerai$.subscribe( res => {
+      res.forEach(item => {
+        console.log(item.id)
+        if(item.id !== undefined) {
+          return this.getMenu(item.id)
+        }
+        
+      });
+      
+    })
     } 
   
-    getMenu() {
-        this.serviceMenu.getMenu().subscribe((item) => {
+    getMenu(idGerai) {
+      console.log(idGerai)
+      this.idGerai = idGerai;
+        this.serviceMenu.getMenu(idGerai).subscribe((item) => {
           const menu = item.map(o => {
             return {
               id : o.payload.doc.id,
@@ -60,18 +74,15 @@ timer: any;
       });
     }
     getForm(){
-      let i: number = 0;
       this.timer = setInterval(()=> {
-        if(i == 3) {
-          this.getMenu();
-          i = 0;
+        if(typeof this.menu == 'undefined') {
+          this.ngOnInit()
         } else if (typeof this.menu !== 'undefined') {
           clearInterval(this.timer);
           } else {
             console.log('Menu Belum Ditemukan');
           }
-          i++;
-      }, 1000);
+      }, 3000);
     }
   
     
@@ -83,23 +94,23 @@ timer: any;
       })
     }
 
-    setPesanan(item : any) {
-      this.menu = item;
-      let control = <FormArray> this.form.controls.pesanan;
-      item.forEach(x => {
-        control.push(this.builder.group({
-          id: [x.id], 
-          namaPesanan: [x.namaMenu],
-          hargaPesanan: [x.hargaMenu,] ,
-          jumlahPesanan: [this.Pesanan, Validators.pattern('[0-9]+[0-9]?')],
-          stok: [x.stok]
-        }, {
-          validators: MustMatch('jumlahPesanan', 'stok')
-        })
-        )
-     })
-     console.log(control);
-  }
+  //   setPesanan(item : any) {
+  //     this.menu = item;
+  //     let control = <FormArray> this.form.controls.pesanan;
+  //     item.forEach(x => {
+  //       control.push(this.builder.group({
+  //         id: [x.id], 
+  //         namaPesanan: [x.namaMenu],
+  //         hargaPesanan: [x.hargaMenu,] ,
+  //         jumlahPesanan: [this.Pesanan, Validators.pattern('[0-9]+[0-9]?')],
+  //         stok: [x.stok]
+  //       }, {
+  //         validators: MustMatch('jumlahPesanan', 'stok')
+  //       })
+  //       )
+  //    })
+  //    console.log(control);
+  // }
 
   tambah(index: any, pesanan: number) {
     if(pesanan < (this.menu[index].stok - 0)){
@@ -113,18 +124,19 @@ timer: any;
 
   
     onSubmit(f) {
+      console.log(f)
       let a = this.form.controls.pesanan as FormArray;
       let z = a.length;
       for(let c:number = 0; c < z; c++) {
         let control = (<FormArray> this.form.controls.pesanan).at(c);
         let s = control['controls'].jumlahPesanan.value
-        if (s === 0 || s === null) {
+        if (s === 0 || s === null || s == 0) {
           a.removeAt(c);
           c--
           z--
         }
       }
-
+      console.log(a)
     this.jumlah(z);
     
       
@@ -147,8 +159,7 @@ timer: any;
             const d : number = control['controls'].jumlahPesanan.value;
             const s : number =  control['controls'].stok.value;
             let n = (s - 0 ) - d;
-            console.log(control)
-            this.serviceMenu.updateStokMenu(i, n);
+            this.serviceMenu.updateStokMenu(i, n, this.idGerai);
             }
         this.servicePesanan.addPesanan(z, hasil, this.form.value);
         const dialogRef = this.dialog.open(NotifComponent, {

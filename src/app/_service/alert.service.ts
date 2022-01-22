@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 import { MainMenuComponent } from '../main-menu/main-menu.component';
 import { AlertComponent } from '../alert/alert.component';
-import { User } from '../_model/user';
+import { User } from '../_model/user.model';
 
 @Injectable({
   providedIn: 'root'
